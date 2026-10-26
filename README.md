@@ -91,7 +91,7 @@ module "my_gke_runner_cluster" {
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.11.0 |
-| <a name="requirement_google"></a> [google](#requirement\_google) | >= 6.0.0, < 8.0.0 |
+| <a name="requirement_google"></a> [google](#requirement\_google) | >= 7.0.0, < 9.0.0 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 3 |
 
 ## Modules
