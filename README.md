@@ -89,7 +89,7 @@ module "my_gke_runner_cluster" {
 ## Requirements
 
 | Name | Version |
-| ---- | ------- |
+|------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.11.0 |
 | <a name="requirement_google"></a> [google](#requirement\_google) | >= 6.0.0, < 8.0.0 |
 | <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | ~> 3 |
@@ -97,20 +97,20 @@ module "my_gke_runner_cluster" {
 ## Modules
 
 | Name | Source | Version |
-| ---- | ------ | ------- |
+|------|--------|---------|
 | <a name="module_k8s_runner_cluster"></a> [k8s\_runner\_cluster](#module\_k8s\_runner\_cluster) | github.com/humanitec-tf-modules/k8s-runner-cluster | add-runner-cluster |
 
 ## Resources
 
 | Name | Type |
-| ---- | ---- |
+|------|------|
 | [google_client_config.current](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/client_config) | data source |
 | [google_project.gke](https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/project) | data source |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-| ---- | ----------- | ---- | ------- | :------: |
+|------|-------------|------|---------|:--------:|
 | <a name="input_gke_project_id"></a> [gke\_project\_id](#input\_gke\_project\_id) | ID of the Google Cloud project hosting the GKE cluster of the runner. The cluster must have Workload Identity Federation for GKE enabled. If not set, the project of the `google` provider that is passed in to the module is used. The module reads the project to obtain its number for the `runner_principal` output. | `string` | `null` | no |
 | <a name="input_is_separate_runner_cluster"></a> [is\_separate\_runner\_cluster](#input\_is\_separate\_runner\_cluster) | Whether the target cluster is a separate runner cluster, i.e. not on the same cluster as an Operator. Setting this to `true` results in an additional role created and bound to the runner service account for managing Kubernetes Jobs and related resources. | `bool` | `false` | no |
 | <a name="input_runner_namespace"></a> [runner\_namespace](#input\_runner\_namespace) | Name of the Kubernetes namespace for the runner. | `string` | `"humanitec-runner"` | no |
@@ -123,7 +123,7 @@ module "my_gke_runner_cluster" {
 ## Outputs
 
 | Name | Description |
-| ---- | ----------- |
+|------|-------------|
 | <a name="output_gke_project_id"></a> [gke\_project\_id](#output\_gke\_project\_id) | ID of the Google Cloud project hosting the GKE cluster |
 | <a name="output_gke_project_number"></a> [gke\_project\_number](#output\_gke\_project\_number) | Number of the Google Cloud project hosting the GKE cluster |
 | <a name="output_runner_namespace"></a> [runner\_namespace](#output\_runner\_namespace) | Name of the Kubernetes namespace for the runner. |
