@@ -17,7 +17,7 @@ variable "runner_serviceaccount_annotations" {
   default     = {}
 }
 variable "runner_role" {
-  description = "Name of the Kubernetes role for the runner"
+  description = "Name of the Kubernetes role for the runner."
   type        = string
   nullable    = false
   default     = "humanitec-runner"
