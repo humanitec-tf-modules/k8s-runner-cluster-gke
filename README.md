@@ -43,6 +43,12 @@ resource "google_project_iam_member" "runner_storage_admin" {
 
 ### Annotate the Kubernetes service account
 
+Use the `runner_serviceaccount_annotations` variable to add annotations to the Kubernetes service account.
+
+One use case is impersonating a Google service account.
+
+Some Google Cloud products do not support granting IAM roles to the `runner_principal` directly (see [Identity Federation: products and limitations](https://cloud.google.com/iam/docs/federated-identity-supported-services)). For these products, link the runner Kubernetes service account to a Google service account by annotating it. The runner then acts as the Google service account, so grant roles to that account instead of `runner_principal`.
+
 ```hcl
 module "my_gke_runner_cluster" {
   source = "github.com/humanitec-tf-modules/k8s-runner-cluster-gke?ref=vX.Y.Z"
@@ -54,9 +60,15 @@ module "my_gke_runner_cluster" {
   gke_project_id = google_container_cluster.my_gke_cluster.project
 
   runner_serviceaccount_annotations = {
-    "annotation1" = "value1"
-    "annotation2" = "value2"
+    "iam.gke.io/gcp-service-account" = google_service_account.my_runner_gsa.email
   }
+}
+
+# Allow the runner Kubernetes service account to impersonate the Google service account
+resource "google_service_account_iam_member" "runner_workload_identity_user" {
+  service_account_id = google_service_account.my_runner_gsa.name
+  role               = "roles/iam.workloadIdentityUser"
+  member             = "serviceAccount:${module.my_gke_runner_cluster.workload_identity_pool}[${module.my_gke_runner_cluster.runner_namespace}/${module.my_gke_runner_cluster.runner_serviceaccount_name}]"
 }
 ```
 
