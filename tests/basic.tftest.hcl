@@ -146,6 +146,36 @@ run "complete" {
   }
 }
 
+# Edge cases
+
+run "gke_project_id_without_provider_default" {
+  command = apply
+
+  variables {
+    gke_project_id = "my-gke-project"
+  }
+
+  override_data {
+    target = data.google_client_config.current
+    values = {
+      project = ""
+    }
+  }
+
+  assert {
+    condition     = data.google_project.gke.project_id == "my-gke-project"
+    error_message = "Project should be read by gke_project_id if the google provider has no default project"
+  }
+  assert {
+    condition     = output.gke_project_id == "my-gke-project" && output.workload_identity_pool == "my-gke-project.svc.id.goog"
+    error_message = "Project ID and Workload Identity pool outputs should use gke_project_id if the google provider has no default project"
+  }
+  assert {
+    condition     = output.runner_principal == "principal://iam.googleapis.com/projects/123456789012/locations/global/workloadIdentityPools/my-gke-project.svc.id.goog/subject/ns/humanitec-runner/sa/humanitec-runner"
+    error_message = "Runner principal output should use gke_project_id if the google provider has no default project, got ${output.runner_principal}"
+  }
+}
+
 # Validation failures
 
 run "requires_project_without_provider_default" {
