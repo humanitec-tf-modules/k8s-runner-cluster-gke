@@ -27,18 +27,18 @@ output "separate_runner_cluster_rolebinding_subjects" {
   value       = module.k8s_runner_cluster.separate_runner_cluster_rolebinding_subjects
 }
 output "runner_principal" {
-  value       = local.runner_principal
   description = "IAM principal identifier of the runner Kubernetes service account for Workload Identity Federation for GKE, like `principal://iam.googleapis.com/projects/<project-number>/locations/global/workloadIdentityPools/<project-id>.svc.id.goog/subject/ns/<namespace>/sa/<serviceaccount>`. Use it as the member to grant Google Cloud IAM roles to the runner."
+  value       = local.runner_principal
 }
 output "workload_identity_pool" {
-  value       = local.workload_identity_pool
   description = "Name of the Workload Identity pool of the GKE cluster project, like `<project-id>.svc.id.goog`."
+  value       = local.workload_identity_pool
 }
 output "gke_project_id" {
-  value       = data.google_project.gke.project_id
   description = "ID of the Google Cloud project hosting the GKE cluster."
+  value       = data.google_project.gke.project_id
 }
 output "gke_project_number" {
-  value       = data.google_project.gke.number
   description = "Number of the Google Cloud project hosting the GKE cluster."
+  value       = data.google_project.gke.number
 }
